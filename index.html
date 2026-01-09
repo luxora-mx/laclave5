@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>La Clave 5</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<header>
+    <div class="logo">
+        <img src="BB745DFA-5EB6-4A0E-A929-5153A3782856.png" alt="La Clave 5" style="height:50px;">
+        <div class="logo-text">La Clave 5</div>
+    </div>
+
+    <div class="cart" onclick="openCart()">
+        🛒 <span id="cart-count">0</span>
+    </div>
+</header>
+
+<main>
+    <section class="products">
+
+        <div class="product">
+            <img src="bc9aa844-7247-4a3b-bcaf-a3d5926c47a5.jpeg">
+            <h3>$500 → $2,000 en billetes didácticos</h3>
+            <p class="price">$500 MXN</p>
+            <button onclick="addToCart('$500 → $2,000 en billetes', 500)">
+                Agregar al carrito
+            </button>
+        </div>
+
+        <div class="product">
+            <img src="bc9aa844-7247-4a3b-bcaf-a3d5926c47a5.jpeg">
+            <h3>$1,000 → $4,000 en billetes didácticos</h3>
+            <p class="price">$1,000 MXN</p>
+            <button onclick="addToCart('$1,000 → $4,000 en billetes', 1000)">
+                Agregar al carrito
+            </button>
+        </div>
+
+        <div class="product">
+            <img src="bc9aa844-7247-4a3b-bcaf-a3d5926c47a5.jpeg">
+            <h3>$1,500 → $6,500 en billetes didácticos</h3>
+            <p class="price">$1,500 MXN</p>
+            <button onclick="addToCart('$1,500 → $6,500 en billetes', 1500)">
+                Agregar al carrito
+            </button>
+        </div>
+
+        <div class="product">
+            <img src="bc9aa844-7247-4a3b-bcaf-a3d5926c47a5.jpeg">
+            <h3>$2,500 → $9,000 en billetes didácticos</h3>
+            <p class="price">$2,500 MXN</p>
+            <button onclick="addToCart('$2,500 → $9,000 en billetes', 2500)">
+                Agregar al carrito
+            </button>
+        </div>
+
+        <div class="product">
+            <img src="bc9aa844-7247-4a3b-bcaf-a3d5926c47a5.jpeg">
+            <h3>$4,000 → $18,000 en billetes didácticos</h3>
+            <p class="price">$4,000 MXN</p>
+            <button onclick="addToCart('$4,000 → $18,000 en billetes', 4000)">
+                Agregar al carrito
+            </button>
+        </div>
+
+    </section>
+</main>
+
+<!-- MODAL DEL CARRITO -->
+<div id="cart-modal" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.85); z-index:1000;">
+    <div style="background:#111; max-width:420px; margin:80px auto; padding:24px; border-radius:14px;">
+        <h2 style="margin-bottom:12px;">Tu carrito</h2>
+
+        <div id="cart-items" style="margin-bottom:14px;"></div>
+
+        <p><strong>Total:</strong> <span id="cart-total"></span></p>
+
+        <button onclick="closeCart()" style="margin-top:10px;">Cerrar</button>
+        <button style="margin-top:10px; width:100%;">Finalizar compra</button>
+    </div>
+</div>
+
+<script>
+let cart = [];
+
+function addToCart(name, price) {
+    cart.push({ name, price });
+    updateCartCount();
+    alert("Producto agregado al carrito");
+}
+
+function updateCartCount() {
+    document.getElementById("cart-count").innerText = cart.length;
+}
+
+function openCart() {
+    let itemsHTML = "";
+    let total = 0;
+
+    cart.forEach((item, index) => {
+        total += item.price;
+        itemsHTML += `
+            <div style="display:flex; justify-content:space-between; margin-bottom:8px;">
+                <span>${item.name}</span>
+                <button onclick="removeItem(${index})">❌</button>
+            </div>
+        `;
+    });
+
+    document.getElementById("cart-items").innerHTML = itemsHTML || "<p>Tu carrito está vacío</p>";
+    document.getElementById("cart-total").innerText = "$" + total + " MXN";
+    document.getElementById("cart-modal").style.display = "block";
+}
+
+function closeCart() {
+    document.getElementById("cart-modal").style.display = "none";
+}
+
+function removeItem(index) {
+    cart.splice(index, 1);
+    updateCartCount();
+    openCart();
+}
+</script>
+
+</body>
+</html>
